@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SignalRChat.Hubs;
+using Microsoft.EntityFrameworkCore;
+using SignalRChat.Data;
 
 namespace SignalRChat
 {
@@ -21,14 +23,17 @@ namespace SignalRChat
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        // Этот метод вызывается во время выполнения. Используйте этот метод для добавления сервисов в контейнер.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
             services.AddSignalR();
+
+            services.AddDbContext<SignalRChatContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("SignalRChatContext")));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // Этот метод вызывается во время выполнения. Используйте этот метод для настройки конвейера HTTP-запроса.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -38,7 +43,7 @@ namespace SignalRChat
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                // Значение HSTS по умолчанию составляет 30 дней. Вы можете изменить это для производственных сценариев, см. Https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 

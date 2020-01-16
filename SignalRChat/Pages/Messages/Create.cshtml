@@ -1,0 +1,44 @@
+﻿@page
+@model SignalRChat.CreateModel
+
+@{
+    ViewData["Title"] = "Добавление записи";
+}
+
+<h1>Добавление записи</h1>
+
+<h4>Таблица Messages</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Messages.Name" class="control-label"></label>
+                <input asp-for="Messages.Name" class="form-control" />
+                <span asp-validation-for="Messages.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Messages.Message" class="control-label"></label>
+                <input asp-for="Messages.Message" class="form-control" />
+                <span asp-validation-for="Messages.Message" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Messages.SendDate" class="control-label"></label>
+                <input asp-for="Messages.SendDate" class="form-control" />
+                <span asp-validation-for="Messages.SendDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Создать" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Вернуться обратно к списку</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
