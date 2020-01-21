@@ -1,0 +1,11 @@
+﻿@model List<SignalRChat.Models.Messages>
+<ul id="messageList">
+    @foreach (var item in Model)
+    {
+    <li>@Html.DisplayFor(modelItem => item.Name) сказал @Html.DisplayFor(modelItem => item.Message) в @Html.DisplayFor(modelItem => item.SendDate)</li>
+    }
+</ul>
+<script src="~/js/MessageUpdate.js"></script>
+
+
+

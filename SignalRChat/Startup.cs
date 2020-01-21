@@ -23,7 +23,7 @@ namespace SignalRChat
 
         public IConfiguration Configuration { get; }
 
-        // Этот метод вызывается во время выполнения. Используйте этот метод для добавления сервисов в контейнер.
+        // Этот метод вызывается во время выполнения. Используйте этот метод для добавления сервисов в контейнер служб.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();

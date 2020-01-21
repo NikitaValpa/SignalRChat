@@ -9,11 +9,11 @@ namespace SignalRChat.Data
 {
     public class SignalRChatContext : DbContext
     {
-        public SignalRChatContext (DbContextOptions<SignalRChatContext> options)
-            : base(options)
+        public SignalRChatContext (DbContextOptions<SignalRChatContext> options) : base(options)
         {
+
         }
 
-        public DbSet<SignalRChat.Models.Messages> Messages { get; set; }
+        public DbSet<Messages> Messages { get; set; }
     }
 }

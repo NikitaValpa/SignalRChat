@@ -12,9 +12,9 @@ namespace SignalRChat
 {
     public class IndexModel : PageModel
     {
-        private readonly SignalRChat.Data.SignalRChatContext _context;
+        private readonly SignalRChatContext _context;
 
-        public IndexModel(SignalRChat.Data.SignalRChatContext context)
+        public IndexModel(SignalRChatContext context)
         {
             _context = context;
         }
