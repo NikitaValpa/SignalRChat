@@ -9,13 +9,27 @@ document.getElementById("sendButton").disabled = true;
 
 // Устанавливаем метод на стороне клиента, он будет получать данные от нашего хаба, в данном случае метод нашего хаба называется "Send"
 // и фактически он представляет функцию, которая передается в качестве второго параметра
-connection.on("Receive", function (user, message)// Эта функция принимает 3 параметра, то-есть те данные которые хаб отправляет клиенту 
+connection.on("Receive", function (Messages)
 {
-    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    var encodedMsg = user + " сказал " + msg;    
-    var li = document.createElement("li");
-    li.textContent = encodedMsg;
-    document.getElementById("messagesList").appendChild(li);// Просто добавляем в наш список на cshtml страничке, элемент
+    
+    for (var i = 0; i < Messages.length; ++i)// Итерируем список объектов
+    {
+        for (var Messagekey in Messages[i])// Итерируем свойства конкретного объекта
+        {
+            if (Messagekey === "message")
+            {
+                var msg = Messages[i][Messagekey].replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            }
+            if (Messagekey === "name")
+            {
+                var name = Messages[i][Messagekey]
+            }
+        }
+        var encodedMsg = name + " сказал " + msg;
+        var li = document.createElement("li");
+        li.textContent = encodedMsg;
+        document.getElementById("messagesList").appendChild(li);// Просто добавляем в наш список на cshtml страничке, элемент <li>
+    }
 });
 connection.on("Notify", function (message)
 {

@@ -12,13 +12,11 @@ namespace SignalRChat.Models
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var context = new SignalRChatContext(serviceProvider.GetRequiredService<DbContextOptions<SignalRChatContext>>()))
+            using var context = new SignalRChatContext(serviceProvider.GetRequiredService<DbContextOptions<SignalRChatContext>>());
+            // Смотрим все записи в таблице
+            if (context.Messages.Any())
             {
-                // Смотрим все записи в таблице
-                if (context.Messages.Any())
-                {
-                    return; // БД не пустая
-                }
+                return;// Если бд не пустая, возвращаем инициализатор
             }
         }
     }
