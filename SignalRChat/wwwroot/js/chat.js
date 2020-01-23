@@ -31,10 +31,10 @@ connection.on("Receive", function (Messages)
         document.getElementById("messagesList").appendChild(li);// Просто добавляем в наш список на cshtml страничке, элемент <li>
     }
 });
-connection.on("Notify", function (message)
+connection.on("Notify", function (ipMessage)
 {
     var userLi = document.createElement("li");
-    userLi.textContent = message;
+    userLi.textContent = ipMessage;
     document.getElementById("messagesList").appendChild(userLi);
 });
 

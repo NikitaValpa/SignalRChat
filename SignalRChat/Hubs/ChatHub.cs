@@ -30,8 +30,8 @@ namespace SignalRChat.Hubs
             // Создаём объект контекста
             using SignalRChatContext db = new SignalRChatContext(options);
             
-            //db.Messages.Add(new Messages { Name = user, Message = message, SendDate=DateTime.Now });//Добавляем в таблицу "Messages" нашей базы данных новую запись
-            //db.SaveChanges();//Сохраняем изменения
+            db.Messages.Add(new Messages { Name = user, Message = message, SendDate=DateTime.Now });//Добавляем в таблицу "Messages" нашей базы данных новую запись
+            db.SaveChanges();//Сохраняем изменения
 
             var Messages = await db.Messages.ToListAsync();// Получаем список записей из нашей таблицы асинхронно
             

@@ -1,13 +1,17 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Serilog.Extensions.Logging;
 using SignalRChat.Hubs;
 using Microsoft.EntityFrameworkCore;
 using SignalRChat.Data;
@@ -34,7 +38,7 @@ namespace SignalRChat
         }
 
         // Этот метод вызывается во время выполнения. Используйте этот метод для настройки конвейера HTTP-запроса.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -46,6 +50,8 @@ namespace SignalRChat
                 // Значение HSTS по умолчанию составляет 30 дней. Вы можете изменить это для производственных сценариев, см. Https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            var loggingOptions = Configuration.GetSection("Log4NetCore").Get<Log4NetProviderOptions>();
+            loggerFactory.AddLog4Net(loggingOptions);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

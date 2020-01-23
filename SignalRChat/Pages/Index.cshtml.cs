@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.SignalR.Client;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -26,10 +28,10 @@ namespace SignalRChat.Pages
 
         public IList<Models.Messages> Messages { get; set; } // Создаём автосвойство в классе, которое используется на страничке и в методах бэкенда этой странички, это свойство является списком, элементами которого являются объекты модели "Messages"
                                                              // Другими словами, это список объектов "Messages"
-        
+
         public async Task OnGetAsync()
         {
-           Messages = await _context.Messages.ToListAsync(); // Присваеваем нашему свойству контекст таблицы Messages нашей базы данных
+            Messages = await _context.Messages.ToListAsync(); // Присваеваем нашему свойству контекст таблицы Messages нашей базы данных
         }
 
     }
