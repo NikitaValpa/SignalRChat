@@ -38,7 +38,7 @@ namespace SignalRChat.Pages.DataBase.Roles
                 return Page();
             }
 
-            var User = new IdentityRole { Name = getRole.Name, NormalizedName = getRole.NormalizedName };
+            var User = new IdentityRole { Name = getRole.Name };
                 
             var result = await _roleManager.CreateAsync(User);
             if (result.Succeeded)

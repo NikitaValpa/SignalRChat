@@ -54,7 +54,6 @@ namespace SignalRChat.Pages.DataBase.Roles
             {
                 
                 User.Name = getRole.Name;
-                User.NormalizedName = getRole.NormalizedName;
                 var result = await _roleManager.UpdateAsync(User);
                 if (result.Succeeded)
                 {
