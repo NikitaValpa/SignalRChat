@@ -1,0 +1,37 @@
+﻿@page
+@model SignalRChat.Pages.DataBase.Users.DetailsUserModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Детали</h1>
+
+<div>
+    <h4>Запись таблицы Users</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.getUser.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.getUser.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.getUser.UserName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.getUser.UserName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.getUser.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.getUser.Email)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.getUser.Id">Редактировать</a> |
+    <a asp-page="./Index">Вернуться к списку записей</a>
+</div>

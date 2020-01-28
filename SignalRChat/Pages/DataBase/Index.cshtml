@@ -1,0 +1,47 @@
+﻿@page
+@model SignalRChat.MessagesModel
+
+@{
+    ViewData["Title"] = "База данных";
+}
+
+<h1>Таблицы</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Имя таблицы
+            </th>
+            <th>
+                Ссылка
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <label>Таблица Messages</label>
+            </td>
+            <td>
+                <a asp-area="" asp-page="./Messages/Index">Перейти</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Таблица Users</label>
+            </td>
+            <td>
+                <a asp-area="" asp-page="./Users/Index">Перейти</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Таблица Roles</label>
+            </td>
+            <td>
+                <a asp-area="" asp-page="./Roles/Index">Перейти</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

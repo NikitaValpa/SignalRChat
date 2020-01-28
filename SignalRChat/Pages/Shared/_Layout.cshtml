@@ -25,9 +25,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Политики</a>
                         </li>
                         <li>
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Messages/Index">База данных</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/DataBase/Index">База данных</a>
                         </li>
                     </ul>
+                </div>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-row-reverse p-2">
+                    @await Html.PartialAsync("_LoginPartial.cshtml")
                 </div>
             </div>
         </nav>
@@ -40,7 +43,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - SignalRChat - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2020 - SignalRChat - <a asp-area="" asp-page="/Privacy">Политики</a>
         </div>
     </footer>
 

@@ -1,0 +1,51 @@
+﻿@page
+@model SignalRChat.Pages.DataBase.Roles.RolesModel
+@{
+    ViewData["Title"] = "Таблица Roles";
+}
+
+<h1>Записи таблицы Roles</h1>
+
+<p>
+    <a asp-page="./Create">Создать новую запись</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Roles[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Roles[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Roles[0].NormalizedName)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Roles)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NormalizedName)
+                </td>
+
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Редактировать</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Детали</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<footer>
+    <a asp-area="" asp-page="/DataBase/Index">Вернуться к списку таблиц</a>
+</footer>

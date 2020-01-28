@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog.Extensions.Logging;
@@ -20,6 +21,7 @@ namespace SignalRChat
 {
     public class Startup
     {
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,8 +35,15 @@ namespace SignalRChat
             services.AddRazorPages();
             services.AddSignalR();
 
+            // добавление контекста для взаимодействия с базой данных Entity Framework
             services.AddDbContext<SignalRChatContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("SignalRChatContext")));
+
+            // добавление контекста для взаимодействия с базой данных Identity Framework
+            services.AddDbContext<SignalRChatContextIdentity>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("SignalRChatContext")));
+            
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<SignalRChatContextIdentity>();
         }
 
         // Этот метод вызывается во время выполнения. Используйте этот метод для настройки конвейера HTTP-запроса.
@@ -58,7 +67,9 @@ namespace SignalRChat
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,0 +1,38 @@
+﻿@page
+@model SignalRChat.Pages.DataBase.Roles.DetailsRoleModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Детали</h1>
+
+<div>
+    <h4>Запись таблицы Users</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.getRole.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.getRole.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.getRole.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.getRole.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.getRole.NormalizedName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.getRole.NormalizedName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.getRole.Id">Редактировать</a> |
+    <a asp-page="./Index">Вернуться к списку записей</a>
+</div>
+

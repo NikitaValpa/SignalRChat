@@ -1,0 +1,40 @@
+﻿@page
+@model SignalRChat.Pages.DataBase.Roles.EditRoleModel
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Редактирование записи базы</h1>
+
+<h4>Таблица Roles</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="getRole.Id" />
+            <div class="form-group">
+                <label asp-for="getRole.Name" class="control-label"></label>
+                <input asp-for="getRole.Name" class="form-control" />
+                <span asp-validation-for="getRole.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="getRole.NormalizedName" class="control-label"></label>
+                <input asp-for="getRole.NormalizedName" class="form-control" />
+                <span asp-validation-for="getRole.NormalizedName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Вернутся к списку</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

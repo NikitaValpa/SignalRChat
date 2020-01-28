@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using SignalRChat.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace SignalRChat.Data
 {
@@ -14,6 +16,14 @@ namespace SignalRChat.Data
 
         }
 
-        public DbSet<Messages> Messages { get; set; }
+        public DbSet<Models.Messages> Messages { get; set; }
+    }
+    public class SignalRChatContextIdentity : IdentityDbContext<IdentityUser>
+    {
+        public SignalRChatContextIdentity(DbContextOptions<SignalRChatContextIdentity> options) : base(options)
+        {
+            
+        }
+
     }
 }
