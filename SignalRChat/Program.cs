@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
 using SignalRChat.Models;
 
 namespace SignalRChat
@@ -20,10 +21,13 @@ namespace SignalRChat
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-
+                Task t;
                 try
                 {
-                    SeeData.Initialize(services);
+                    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+                    var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    t = RoleInitializer.InitializeAsync(userManager, rolesManager);
+                    t.Wait();
                 }
                 catch (Exception ex)
                 {

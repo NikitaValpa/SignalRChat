@@ -20,16 +20,16 @@ namespace SignalRChat.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        private readonly IEmailSender _emailSender;
+        //private readonly IEmailSender _emailSender;
 
         public LoginModel(SignInManager<IdentityUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager,
-            IEmailSender emailSender)
+            UserManager<IdentityUser> userManager/*,
+            IEmailSender emailSender*/)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
+            //_emailSender = emailSender;
             _logger = logger;
         }
 
