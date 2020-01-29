@@ -1,0 +1,29 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@model SignalRChat.Pages.DataBase.Users.EditRolesUserModel
+@{
+    ViewData["Title"] = "Редактирование прав пользователя";
+}
+
+<h2>Изменение ролей для пользователя @Model.getUser.UserName</h2>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <input type="hidden" name="userId" asp-for="getUser.Id" />
+            <div class="form-group">
+                @foreach (IdentityRole role in Model.AllRoles)
+                {
+                    <input type="checkbox" name="roles" value="@role.Name" @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "")/>  @role.Name <br/>
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Вернутся к списку</a>
+</div>
+
