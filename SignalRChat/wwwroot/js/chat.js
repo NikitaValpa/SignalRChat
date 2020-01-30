@@ -31,6 +31,24 @@ connection.on("Receive", function (Messages)
         document.getElementById("messagesList").appendChild(li);// Просто добавляем в наш список на cshtml страничке, элемент <li>
     }
 });
+connection.on("ReceiveOne", function (Message) {
+
+
+    for (var Messagekey in Message)// Итерируем свойства конкретного объекта
+    {
+       if (Messagekey === "message") {
+                var msg = Message[Messagekey].replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+       }
+       if (Messagekey === "name") {
+                var name = Message[Messagekey]
+       }
+    }
+        var encodedMsg = name + " сказал " + msg;
+        var li = document.createElement("li");
+        li.textContent = encodedMsg;
+        document.getElementById("messagesList").appendChild(li);// Просто добавляем в наш список на cshtml страничке, элемент <li>
+    
+});
 connection.on("Notify", function (ipMessage)
 {
     var userLi = document.createElement("li");

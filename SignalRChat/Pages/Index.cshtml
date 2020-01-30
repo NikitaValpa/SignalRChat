@@ -1,26 +1,41 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
 @model SignalRChat.Pages.IndexModel
 @{
     ViewData["Title"] = "Главная страница";
 }
 
-<div class="container">
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-2">Пользователь</div>
-        <div class="col-4"><input type="text" id="userInput" /></div>
+    <div class="container">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-2">Привет</div>
+                <div class="col-2"><input type="text" id="userInput" readonly value="@UserManager.GetUserName(User)"/></div>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-2">Сообщение</div>
+                <div class="col-4"><input type="text" id="messageInput"/></div>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-6">
+                    <input type="button" id="sendButton" value="Отправить сообщение" />
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-4">Для того чтобы писать в чат зарегистрируйтесь, или авторизуйтесь</div>
+            </div>
+        }
     </div>
-    <div class="row">
-        <div class="col-2">Сообщение</div>
-        <div class="col-4"><input type="text" id="messageInput" /></div>
-    </div>
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-6">
-            <input type="button" id="sendButton" value="Отправить сообщение" />
-        </div>
-    </div>
-</div>
 <div class="row">
     <div class="col-12">
         <hr />
