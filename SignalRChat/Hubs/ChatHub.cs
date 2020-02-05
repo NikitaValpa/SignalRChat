@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace SignalRChat.Hubs
 {
+    [Authorize]
     public class ChatHub: Hub
     {
         public ConfigurationBuilder builder = new ConfigurationBuilder();
@@ -42,7 +43,6 @@ namespace SignalRChat.Hubs
                                                                            на клиенте получит значение параметров user и message. То есть наш хаб будет просто получать сообщение и 
                                                                            транслировать его всем подключенным клиентам.*/
         }
-        [Authorize]
         public override async Task OnConnectedAsync()
         {
             var user = Context.User;
@@ -66,7 +66,6 @@ namespace SignalRChat.Hubs
 
             await base.OnConnectedAsync();
         }
-        [Authorize]
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             var user = Context.User;

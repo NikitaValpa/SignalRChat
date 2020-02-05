@@ -17,6 +17,7 @@ namespace SignalRChat
     {
         public static void Main(string[] args)
         {
+            
             var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
             {
@@ -46,6 +47,7 @@ namespace SignalRChat
                 {
                     webBuilder.UseConfiguration(config);
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseIISIntegration();
                 });
         }
     }

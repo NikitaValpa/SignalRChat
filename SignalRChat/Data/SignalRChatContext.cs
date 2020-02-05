@@ -13,7 +13,7 @@ namespace SignalRChat.Data
     {
         public SignalRChatContext (DbContextOptions<SignalRChatContext> options) : base(options)
         {
-
+            Database.EnsureCreated();
         }
 
         public DbSet<Models.Messages> Messages { get; set; }
@@ -22,7 +22,7 @@ namespace SignalRChat.Data
     {
         public SignalRChatContextIdentity(DbContextOptions<SignalRChatContextIdentity> options) : base(options)
         {
-            
+            Database.EnsureCreated();
         }
 
     }

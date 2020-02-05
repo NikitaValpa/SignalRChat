@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Serilog.Extensions.Logging;
 using SignalRChat.Hubs;
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using SignalRChat.Data;
 
 namespace SignalRChat
@@ -37,13 +38,18 @@ namespace SignalRChat
 
             // добавление контекста для взаимодействия с базой данных Entity Framework
             services.AddDbContext<SignalRChatContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("SignalRChatContext")));
+                    options.UseMySql(Configuration.GetConnectionString("SignalRChatContext"), mySqlOptions => mySqlOptions.ServerVersion(new Version(8,0,19), ServerType.MySql)));
 
             // добавление контекста для взаимодействия с базой данных Identity Framework
             services.AddDbContext<SignalRChatContextIdentity>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("SignalRChatContext")));
-            
+                    options.UseMySql(Configuration.GetConnectionString("SignalRChatContext"), mySqlOptions => mySqlOptions.ServerVersion(new Version(8,0,19), ServerType.MySql)));
+
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<SignalRChatContextIdentity>();
+
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AutomaticAuthentication = false;
+            });
         }
 
         // Этот метод вызывается во время выполнения. Используйте этот метод для настройки конвейера HTTP-запроса.
