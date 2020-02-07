@@ -36,7 +36,7 @@ namespace SignalRChat.Pages.DataBase.Messages
                 return Page();
             }
 
-            _context.Messages.Add(Messages);
+            _context.Messages.Add(new Models.Messages {Name = Messages.Name, Message = Messages.Message, SendDate = DateTime.Now});
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

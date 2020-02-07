@@ -38,17 +38,20 @@ namespace SignalRChat
 
             // добавление контекста для взаимодействия с базой данных Entity Framework
             services.AddDbContext<SignalRChatContext>(options =>
-                    options.UseMySql(Configuration.GetConnectionString("SignalRChatContext"), mySqlOptions => mySqlOptions.ServerVersion(new Version(8,0,19), ServerType.MySql)));
+                    options.UseMySql(Configuration.GetConnectionString("SignalRChatContext")));
 
             // добавление контекста для взаимодействия с базой данных Identity Framework
             services.AddDbContext<SignalRChatContextIdentity>(options =>
-                    options.UseMySql(Configuration.GetConnectionString("SignalRChatContext"), mySqlOptions => mySqlOptions.ServerVersion(new Version(8,0,19), ServerType.MySql)));
+                    options.UseMySql(Configuration.GetConnectionString("SignalRChatContext")));
 
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<SignalRChatContextIdentity>();
 
             services.Configure<IISServerOptions>(options =>
             {
                 options.AutomaticAuthentication = false;
+            });
+            services.AddSignalR(o => {
+                o.EnableDetailedErrors = true;
             });
         }
 

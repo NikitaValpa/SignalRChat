@@ -8,34 +8,34 @@
     ViewData["Title"] = "Главная страница";
 }
 
-    <div class="container">
-        @if (SignInManager.IsSignedIn(User))
+<div class="container">
+    @if (SignInManager.IsSignedIn(User))
         {
-            <div class="row">&nbsp;</div>
-            <div class="row">
-                <div class="col-2">Пользователь</div>
-                <div class="col-2"><input type="text" id="userInput" readonly value="@UserManager.GetUserName(User)"/></div>
-            </div>
-            <div class="row">&nbsp;</div>
-            <div class="row">
-                <div class="col-2">Сообщение</div>
-                <div class="col-4"><input type="text" id="messageInput"/></div>
-            </div>
-            <div class="row">&nbsp;</div>
-            <div class="row">
-                <div class="col-6">
-                    <input type="button" id="sendButton" value="Отправить сообщение" />
-                </div>
-            </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-2">Пользователь</div>
+        <div class="col-2"><input type="text" id="userInput" readonly value="@UserManager.GetUserName(User)" /></div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-2">Сообщение</div>
+        <div class="col-4"><input type="text" id="messageInput" /></div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <input type="button" id="sendButton" value="Отправить сообщение" />
+        </div>
+    </div>
         }
         else
         {
-            <div class="row">&nbsp;</div>
-            <div class="row">
-                <div class="col-4">Для того чтобы писать и видеть чат, зарегистрируйтесь, или авторизуйтесь</div>
-            </div>
-        }
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-4">Для того чтобы писать и видеть чат, зарегистрируйтесь, или авторизуйтесь</div>
     </div>
+        }
+</div>
 <div class="row">
     <div class="col-12">
         <hr />
@@ -47,4 +47,5 @@
     </div>
 </div>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/js/chat.js"></script>

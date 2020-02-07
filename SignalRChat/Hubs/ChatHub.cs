@@ -14,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace SignalRChat.Hubs
 {
-    [Authorize]
+    
     public class ChatHub: Hub
     {
         public ConfigurationBuilder builder = new ConfigurationBuilder();
@@ -28,7 +28,7 @@ namespace SignalRChat.Hubs
             string connectionString = config.GetConnectionString("SignalRChatContext");
             // Передаём строку подключения в конструктор контекста
             var optionsBuilder = new DbContextOptionsBuilder<SignalRChatContext>();
-            var options = optionsBuilder.UseSqlServer(connectionString).Options;
+            var options = optionsBuilder.UseMySql(connectionString).Options;
             // Создаём объект контекста
             using SignalRChatContext db = new SignalRChatContext(options);
             
@@ -57,7 +57,7 @@ namespace SignalRChat.Hubs
             string connectionString = config.GetConnectionString("SignalRChatContext");
             // Передаём строку подключения в конструктор контекста
             var optionsBuilder = new DbContextOptionsBuilder<SignalRChatContext>();
-            var options = optionsBuilder.UseSqlServer(connectionString).Options;
+            var options = optionsBuilder.UseMySql(connectionString).Options;
             // Создаём объект контекста
             using SignalRChatContext db = new SignalRChatContext(options);
 
