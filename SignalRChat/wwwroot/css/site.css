@@ -69,3 +69,142 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+.leftstr, .rightstr{
+    width: 50%;
+    display:inline;
+}
+.leftstr {
+    text-align:center;
+}
+.rightstr {
+    text-align:center;
+}
+.h1, h1 {
+    font-size: 2.5rem;
+}
+.centerstr {
+    text-align: center;
+}
+.progressAlign {
+    height: 18px;
+    width: 65%;
+    margin-left: -61%;
+    margin-top: 0px;
+    margin-bottom: -30px;
+}
+.countdown {
+    font-family: sans-serif;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 15px;
+    margin-left: 147px;
+    margin-top: -10px;
+}
+
+.countdown-number {
+    padding: 10px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.countdown-time {
+    padding: 15px;
+    border-radius: 3px;
+    background: #bbb8a4;
+    display: inline-block;
+}
+
+.countdown-text {
+    display: block;
+    padding-top: 5px;
+    font-size: 15px;
+}
+.rowelement {
+    margin: 5px;
+    height: 160px;
+}
+.rowstr {
+    width: 100%;
+    text-align:left;
+    margin-left:16px;
+    overflow:hidden;
+}
+.work {
+    display: inline;
+    margin-left: 15%;
+}
+.box {
+    white-space: nowrap;
+    height: 100%;
+}
+.columnleftelement {
+    width: 50%;
+    height: 100%;
+    margin-right: auto;
+    position: relative;
+    display: block;
+    float: left;
+}
+.columnrightelement {
+    width: 50%;
+    height: 100%;
+    margin-left: auto;
+    position: relative;
+}
+.list {
+    list-style:none;
+}
+    .list li {
+        color:red;
+    }
+.messagesList {
+    list-style:none;
+}
+.textbox {
+    margin-left: 16px;
+    padding: 0 10px;
+    font-size: 1em;
+    line-height: 40px;
+    display: inline;
+    text-align: center;
+    border: solid black 1px;
+}
+.selector {
+    width:100%;
+    margin-top:5px;
+}
+    .selector p {
+        display:inline-block;
+        font-size: 17px;
+    }
+.box button {
+    display: inline-block;
+    font-family: arial,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: rgb(68,68,68);
+    text-decoration: none;
+    user-select: none;
+    padding: .2em 1.2em;
+    outline: none;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 2px;
+    background: rgb(245,245,245) linear-gradient(#f4f4f4, #f1f1f1);
+    transition: all .218s ease 0s;
+}
+.box button:hover {
+    color: rgb(24,24,24);
+    border: 1px solid rgb(198,198,198);
+    background: #f7f7f7 linear-gradient(#f7f7f7, #f1f1f1);
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+}
+.box button:active {
+    color: rgb(51,51,51);
+    border: 1px solid rgb(204,204,204);
+    background: rgb(238,238,238) linear-gradient(rgb(238,238,238), rgb(224,224,224));
+    box-shadow: 0 1px 2px rgba(0,0,0,.1) inset;
+}
+.box button:disabled {
+    color: rgb(202, 196, 196);
+}

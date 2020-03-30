@@ -1,10 +1,12 @@
 ﻿"use strict";
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").withAutomaticReconnect().build();// Для взаимодействия с хабом ChatHub с помощью метода build() объекта HubConnectionBuilder 
-                                                                                // создается объект connection - объект подключения. Метод withUrl устанавливает адрес, 
-                                                                                //по котору приложение будет обращаться к хабу.
+let connection = new signalR.HubConnectionBuilder().withUrl("/Chat/Chater")
+    .withAutomaticReconnect()
+    //.configureLogging(signalR.LogLevel.Trace)
+    .build();// Для взаимодействия с хабом ChatHub с помощью метода build() объекта HubConnectionBuilder 
+    // создается объект connection - объект подключения. Метод withUrl устанавливает адрес, //по котору приложение будет обращаться к хабу. //Выключаем кнопку, пока не будет установлено соединение с хабом
 
-//Выключаем кнопку, пока не будет установлено соединение с хабом
+let UserNames = [];
 document.getElementById("sendButton").disabled = true;
 
 // Устанавливаем метод на стороне клиента, он будет получать данные от нашего хаба, в данном случае метод нашего хаба называется "Send"
@@ -12,9 +14,9 @@ document.getElementById("sendButton").disabled = true;
 connection.on("Receive", function (Messages)
 {
     
-    for (var i = 0; i < Messages.length; ++i)// Итерируем список объектов
+    for (let i = 0; i < Messages.length; ++i)// Итерируем список объектов
     {
-        for (var Messagekey in Messages[i])// Итерируем свойства конкретного объекта
+        for (let Messagekey in Messages[i])// Итерируем свойства конкретного объекта
         {
             if (Messagekey === "message")
             {
@@ -24,9 +26,12 @@ connection.on("Receive", function (Messages)
             {
                 var name = Messages[i][Messagekey]
             }
+            if (Messagekey === "sendDate") {
+                var date = Messages[i][Messagekey]
+            }
         }
-        var encodedMsg = name + " сказал " + msg;
-        var li = document.createElement("li");
+        let encodedMsg = date.slice(0, 10) + " " + date.slice(11, 19) +": "+ name + " сказал " + msg;
+        let li = document.createElement("li");
         li.textContent = encodedMsg;
         document.getElementById("messagesList").appendChild(li);// Просто добавляем в наш список на cshtml страничке, элемент <li>
     }
@@ -34,32 +39,41 @@ connection.on("Receive", function (Messages)
 connection.on("ReceiveOne", function (Message) {
 
 
-    for (var Messagekey in Message)// Итерируем свойства конкретного объекта
+    for (let Messagekey in Message)// Итерируем свойства конкретного объекта
     {
        if (Messagekey === "message") {
-                var msg = Message[Messagekey].replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            var msg = Message[Messagekey].replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
        }
        if (Messagekey === "name") {
-                var name = Message[Messagekey]
+            var name = Message[Messagekey]
+       }
+       if (Messagekey === "sendDate") {
+            var date = Message[Messagekey]
        }
     }
-        var encodedMsg = name + " сказал " + msg;
-        var li = document.createElement("li");
-        li.textContent = encodedMsg;
-        document.getElementById("messagesList").appendChild(li);// Просто добавляем в наш список на cshtml страничке, элемент <li>
+    let encodedMsg = date.slice(0, 10) + " " + date.slice(11, 19) + ": " + name + " сказал " + msg;
+    let li = document.createElement("li");
+    li.textContent = encodedMsg;
+    document.getElementById("messagesList").appendChild(li);// Просто добавляем в наш список на cshtml страничке, элемент <li>
     
 });
-connection.on("Notify", function (UserName)
+connection.on("Notify", function (UserNames)
 {
-    var userLi = document.createElement("li");
-    userLi.textContent = UserName;
-    document.getElementById("messagesList").appendChild(userLi);
+    let list = document.getElementById("Users");
+    while (list.firstChild) {//Чистим список, перед отрисовкой
+        list.removeChild(list.firstChild);
+    }
+    for (let Uservalue of UserNames) {//Отрисовываем список, перебирая наш массив
+        let userLi = document.createElement("li");
+        userLi.textContent = Uservalue;
+        document.getElementById("Users").appendChild(userLi);
+    }
 });
 
 document.getElementById("sendButton").addEventListener("click", function (event)//Обработчик для кнопки, который вызывается при её нажатии
 {
-    var user = document.getElementById("userInput").value;
-    var message = document.getElementById("messageInput").value;
+    let user = document.getElementById("userInput").value;
+    let message = document.getElementById("messageInput").value;
     // Для отправки ведённых данных, хабу на сервер, вызывается метод "connection.invoke() с тремя параметрами"
     // первый параметр представляет название метода хаба, обрабатывающее данный запрос, второй и третий параметры - данные отправляемые хабу.
     connection.invoke("SendMessage", user, message).catch(function (err)
@@ -80,20 +94,10 @@ connection.start().then(function () // Для начала соединения 
 
 connection.onreconnecting((error) => {// Обработка ошибок переподключения
     console.assert(connection.state === signalR.HubConnectionState.Reconnecting);
-
-    document.getElementById("messageInput").disabled = true;
-
-    const li = document.createElement("li");
-    li.textContent = `Соединение потеряно из-за ошибки: "${error}". реконнект.`;
-    document.getElementById("messagesList").appendChild(li);
+    console.log(`Соединение потеряно из-за ошибки: "${error}". реконнект.`);
 });
 
 connection.onreconnected((connectionId) => {// Обработка подключения
     console.assert(connection.state === signalR.HubConnectionState.Connected);
-
-    document.getElementById("messageInput").disabled = false;
-
-    const li = document.createElement("li");
-    li.textContent = `Соединение восстановлено. Связано с идентификатором соединения: "${connectionId}".`;
-    document.getElementById("messagesList").appendChild(li);
+    console.log(`Соединение восстановлено. Связано с идентификатором соединения: "${connectionId}".`);
 });

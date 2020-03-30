@@ -8,30 +8,29 @@ using SignalRChat.Data;
 using SignalRChat.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
 
 namespace SignalRChat.Hubs
 {
-    
+    [Authorize]
     public class ChatHub: Hub
     {
+
         public ConfigurationBuilder builder = new ConfigurationBuilder();
-        
+        private readonly ILogger<ChatHub> _logger;
+        private readonly SignalRChatContext db;
+        public static List<string> UserNames = new List<string>();
+        public ChatHub(ILogger<ChatHub> logger, SignalRChatContext context)
+        {
+            _logger = logger;
+            db = context;
+        }
+
         public async Task SendMessage(string user, string message)// принимает параметры
         {
-            // Получаем строку подключения к базе из нашего json файла
-            builder.SetBasePath(Directory.GetCurrentDirectory());
-            builder.AddJsonFile("appsettings.json");
-            var config = builder.Build();
-            string connectionString = config.GetConnectionString("SignalRChatContext");
-            // Передаём строку подключения в конструктор контекста
-            var optionsBuilder = new DbContextOptionsBuilder<SignalRChatContext>();
-            var options = optionsBuilder.UseMySql(connectionString).Options;
-            // Создаём объект контекста
-            using SignalRChatContext db = new SignalRChatContext(options);
-            
             db.Messages.Add(new Messages { Name = user, Message = message, SendDate=DateTime.Now });//Добавляем в таблицу "Messages" нашей базы данных новую запись
             db.SaveChanges();//Сохраняем изменения
 
@@ -47,21 +46,17 @@ namespace SignalRChat.Hubs
         {
             var user = Context.User;
             var userName = user.Identity.Name;
-            //var context = this.Context.GetHttpContext();
-            await Clients.All.SendAsync("Notify", $"{userName} вошёл в чат");
-
-            // Получаем строку подключения к базе из нашего json файла
-            builder.SetBasePath(Directory.GetCurrentDirectory());
-            builder.AddJsonFile("appsettings.json");
-            var config = builder.Build();
-            string connectionString = config.GetConnectionString("SignalRChatContext");
-            // Передаём строку подключения в конструктор контекста
-            var optionsBuilder = new DbContextOptionsBuilder<SignalRChatContext>();
-            var options = optionsBuilder.UseMySql(connectionString).Options;
-            // Создаём объект контекста
-            using SignalRChatContext db = new SignalRChatContext(options);
-
             var Messages = await db.Messages.ToListAsync();// Получаем список записей из нашей таблицы асинхронно
+            //var context = this.Context.GetHttpContext();
+            
+            var AddUser = UserNames.IndexOf(userName, 0);
+            if (AddUser == -1) {
+                UserNames.Add(userName);
+            }
+            
+            
+            await Clients.All.SendAsync("Notify", UserNames);
+            
             await Clients.Caller.SendAsync("Receive", Messages);
 
             await base.OnConnectedAsync();
@@ -71,7 +66,13 @@ namespace SignalRChat.Hubs
             var user = Context.User;
             var userName = user.Identity.Name;
             //var context = this.Context.GetHttpContext();
-            await Clients.All.SendAsync("Notify", $"{userName} покинул чат");
+            
+            var DeleteUser = UserNames.IndexOf(userName, 0);
+            if (DeleteUser != -1) {
+                UserNames.RemoveAt(DeleteUser);
+            }
+            
+            await Clients.Others.SendAsync("Notify", UserNames);
             await base.OnDisconnectedAsync(exception);
         }
     }

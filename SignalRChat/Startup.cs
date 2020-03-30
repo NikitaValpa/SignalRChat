@@ -34,24 +34,25 @@ namespace SignalRChat
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddSignalR();
+            services.AddSignalR(o =>
+            {
+                o.EnableDetailedErrors = true;
+                //o.KeepAliveInterval = TimeSpan.FromMinutes(1);
+            });
 
-            // добавление контекста для взаимодействия с базой данных Entity Framework
+                // добавление контекста для взаимодействия с базой данных Entity Framework
             services.AddDbContext<SignalRChatContext>(options =>
-                    options.UseMySql(Configuration.GetConnectionString("SignalRChatContext")));
+                    options.UseMySql(Configuration.GetConnectionString("SignalRChatContext"), optionsMySql => optionsMySql.EnableRetryOnFailure()));
 
             // добавление контекста для взаимодействия с базой данных Identity Framework
             services.AddDbContext<SignalRChatContextIdentity>(options =>
-                    options.UseMySql(Configuration.GetConnectionString("SignalRChatContext")));
+                    options.UseMySql(Configuration.GetConnectionString("SignalRChatContext"), optionsMySql => optionsMySql.EnableRetryOnFailure()));
 
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<SignalRChatContextIdentity>();
 
             services.Configure<IISServerOptions>(options =>
             {
                 options.AutomaticAuthentication = false;
-            });
-            services.AddSignalR(o => {
-                o.EnableDetailedErrors = true;
             });
         }
 
@@ -78,12 +79,13 @@ namespace SignalRChat
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
 
+
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                endpoints.MapHub<ChatHub>("/chatHub");
+                endpoints.MapHub<ChatHub>("/Chater");
             });
         }
     }

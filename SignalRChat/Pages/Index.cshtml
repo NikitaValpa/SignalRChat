@@ -5,36 +5,41 @@
 @inject RoleManager<IdentityRole> RoleManager
 @model SignalRChat.Pages.IndexModel
 @{
-    ViewData["Title"] = "Главная страница";
+    ViewData["Title"] = "Чат";
 }
 
 <div class="container">
     @if (SignInManager.IsSignedIn(User))
-        {
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-2">Пользователь</div>
-        <div class="col-2"><input type="text" id="userInput" readonly value="@UserManager.GetUserName(User)" /></div>
-    </div>
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-2">Сообщение</div>
-        <div class="col-4"><input type="text" id="messageInput" /></div>
-    </div>
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-6">
-            <input type="button" id="sendButton" value="Отправить сообщение" />
+    {
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-2">Пользователь</div>
+            <div class="col-2"><input type="text" id="userInput" style="border: 0px;" readonly value="@UserManager.GetUserName(User)" /></div>
         </div>
-    </div>
-        }
-        else
-        {
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-4">Для того чтобы писать и видеть чат, зарегистрируйтесь, или авторизуйтесь</div>
-    </div>
-        }
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-2">Сообщение</div>
+            <div class="col-4"><textarea type="text" id="messageInput"></textarea></div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-6">
+                <input type="button" id="sendButton" value="Отправить сообщение" />
+            </div>
+        </div>
+        <div class="columnrightelement" style="white-space:nowrap; float:right; margin-top:-175px; background-color:#e8e8e8;">
+            <p>Люди в чате</p>
+            <ul id="Users" class="messagesList" style="padding-left: 0;">
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-4">Для того чтобы писать и видеть чат, зарегистрируйтесь, или авторизуйтесь</div>
+        </div>
+    }
 </div>
 <div class="row">
     <div class="col-12">
@@ -43,9 +48,8 @@
 </div>
 <div class="row">
     <div class="col-6">
-        <ul id="messagesList"></ul>
+        <ul id="messagesList" class="messagesList"></ul>
     </div>
 </div>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/js/chat.js"></script>
