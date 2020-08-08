@@ -26,12 +26,9 @@ namespace SignalRChat.Pages
             _context = context;
         }
 
-        public IList<Models.Messages> Messages { get; set; } // Создаём автосвойство в классе, которое используется на страничке и в методах бэкенда этой странички, это свойство является списком, элементами которого являются объекты модели "Messages"
-                                                             // Другими словами, это список объектов "Messages"
-
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            Messages = await _context.Messages.ToListAsync(); // Присваеваем нашему свойству контекст таблицы Messages нашей базы данных
+      
         }
 
     }

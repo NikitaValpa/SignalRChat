@@ -15,7 +15,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace SignalRChat.Hubs
 {
-    [Authorize]
     public class ChatHub: Hub
     {
 
@@ -53,10 +52,11 @@ namespace SignalRChat.Hubs
             if (AddUser == -1) {
                 UserNames.Add(userName);
             }
-            
-            
-            await Clients.All.SendAsync("Notify", UserNames);
-            
+
+            if (UserNames.Any()) {
+                await Clients.All.SendAsync("Notify", UserNames);
+            }
+                        
             await Clients.Caller.SendAsync("Receive", Messages);
 
             await base.OnConnectedAsync();
@@ -71,8 +71,11 @@ namespace SignalRChat.Hubs
             if (DeleteUser != -1) {
                 UserNames.RemoveAt(DeleteUser);
             }
+
+            if (UserNames.Any()) {
+                await Clients.Others.SendAsync("Notify", UserNames);
+            }
             
-            await Clients.Others.SendAsync("Notify", UserNames);
             await base.OnDisconnectedAsync(exception);
         }
     }

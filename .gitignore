@@ -354,3 +354,4 @@ healthchecksdb
 *.3
 /SignalRChat/overridedFileName.log.2020-02-05
 /SignalRChat/overridedFileName.log.2020-02-06
+/SignalRChat/logs
