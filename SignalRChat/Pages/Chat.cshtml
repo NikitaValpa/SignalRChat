@@ -1,0 +1,57 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+@model SignalRChat.Pages.ChatModel
+@{
+    ViewData["Title"] = "Чат";
+}
+
+    <div class="container">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-auto">Сообщение</div>
+                <div class="col-auto"><textarea type="text" id="messageInput"></textarea></div>
+                <div class="col-auto" style="background-color: #e3e5ea; border-radius: 10px;">
+                    <p>Люди в чате</p>
+                    <ul id="Users" class="messagesList" style="padding-left: 0;">
+                    </ul>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-6">
+                    <input type="button" id="sendButton" value="Отправить сообщение" />
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col">Для того чтобы писать в чат, зарегистрируйтесь, или авторизуйтесь</div>
+                <div class="col" style="background-color: #e3e5ea; border-radius: 10px;">
+                    <p>Люди в чате</p>
+                    <ul id="Users" class="messagesList" style="padding-left: 0;">
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+<div class="row">
+    <div class="col">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-auto h-50 overflow-auto">
+        <ul id="messagesList" class="messagesList">
+            @foreach (var message in Model.MessagesList) {
+                <li>@message.SendDate.ToString("dd.MM.yyyy HH:mm:ss") @message.Name: @message.Message</li>
+            }
+        </ul>
+    </div>
+</div>

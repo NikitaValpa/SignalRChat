@@ -56,8 +56,6 @@ namespace SignalRChat.Hubs
             if (UserNames.Any()) {
                 await Clients.All.SendAsync("Notify", UserNames);
             }
-                        
-            await Clients.Caller.SendAsync("Receive", Messages);
 
             await base.OnConnectedAsync();
         }

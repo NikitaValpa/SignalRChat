@@ -1,6 +1,6 @@
 ﻿"use strict";
 function ChatScript() {
-    let connection = new signalR.HubConnectionBuilder().withUrl("/Chat/Chater", { transport: signalR.HttpTransportType.ServerSentEvents })
+    let connection = new signalR.HubConnectionBuilder().withUrl("/Chater", { transport: signalR.HttpTransportType.ServerSentEvents })
         .withAutomaticReconnect()
         //.configureLogging(signalR.LogLevel.Trace)
         .build();// Для взаимодействия с хабом ChatHub с помощью метода build() объекта HubConnectionBuilder 
@@ -8,28 +8,6 @@ function ChatScript() {
 
     // Устанавливаем метод на стороне клиента, он будет получать данные от нашего хаба, в данном случае метод нашего хаба называется "Send"
     // и фактически он представляет функцию, которая передается в качестве второго параметра
-    connection.on("Receive", function (Messages) {
-
-        for (let i = 0; i < Messages.length; ++i)// Итерируем список объектов
-        {
-            for (let Messagekey in Messages[i])// Итерируем свойства конкретного объекта
-            {
-                if (Messagekey === "message") {
-                    var msg = Messages[i][Messagekey].replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                }
-                if (Messagekey === "name") {
-                    var name = Messages[i][Messagekey]
-                }
-                if (Messagekey === "sendDate") {
-                    var date = Messages[i][Messagekey]
-                }
-            }
-            let encodedMsg = date.slice(0, 10) + " " + date.slice(11, 19) + ": " + name + " сказал " + msg;
-            let li = document.createElement("li");
-            li.textContent = encodedMsg;
-            document.getElementById("messagesList").appendChild(li);// Просто добавляем в наш список на cshtml страничке, элемент <li>
-        }
-    });
     connection.on("ReceiveOne", function (Message) {
 
 
@@ -45,7 +23,15 @@ function ChatScript() {
                 var date = Message[Messagekey]
             }
         }
-        let encodedMsg = date.slice(0, 10) + " " + date.slice(11, 19) + ": " + name + " сказал " + msg;
+
+        let Data = new Date(date.slice(0, date.indexOf("+")));
+        let Day = (Data.getDate().toString().length == 1) ? "0" + Data.getDate().toString() : Data.getDate().toString();
+        let Mouth = (Number(Data.getMonth() + 1).toString().length == 1) ? "0" + Number(Data.getMonth() + 1).toString() : Number(Data.getMonth() + 1).toString();
+        let Minutes = (Data.getMinutes().toString().length == 1) ? "0" + Data.getMinutes().toString() : Data.getMinutes().toString();
+        let Hours = (Data.getHours().toString().length == 1) ? "0" + Data.getHours().toString() : Data.getHours().toString();
+        let Seconds = (Data.getSeconds().toString().length == 1) ? "0" + Data.getSeconds().toString() : Data.getSeconds().toString();
+
+        let encodedMsg = Day + "." + Mouth + "." + Data.getFullYear() + " " + Hours + ":" + Minutes + ":" + Seconds + " " + name + ": " + msg;
         let li = document.createElement("li");
         li.textContent = encodedMsg;
         document.getElementById("messagesList").appendChild(li);// Просто добавляем в наш список на cshtml страничке, элемент <li>

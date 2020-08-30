@@ -1,53 +1,15 @@
 ﻿@page
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
-@inject RoleManager<IdentityRole> RoleManager
 @model SignalRChat.Pages.IndexModel
 @{
-    ViewData["Title"] = "Чат";
+    ViewData["Title"] = "Главная";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-    <div class="container">
-        @if (SignInManager.IsSignedIn(User))
-        {
-            <div class="row">&nbsp;</div>
-            <div class="row">
-                <div class="col-auto">Сообщение</div>
-                <div class="col-auto"><textarea type="text" id="messageInput"></textarea></div>
-                <div class="col-auto" style="background-color: #e3e5ea; border-radius: 10px;">
-                    <p>Люди в чате</p>
-                    <ul id="Users" class="messagesList" style="padding-left: 0;">
-                    </ul>
-                </div>
-            </div>
-            <div class="row">&nbsp;</div>
-            <div class="row">
-                <div class="col-6">
-                    <input type="button" id="sendButton" value="Отправить сообщение" />
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="row">&nbsp;</div>
-            <div class="row">
-                <div class="col">Для того чтобы писать в чат, зарегистрируйтесь, или авторизуйтесь</div>
-                <div class="col" style="background-color: #e3e5ea; border-radius: 10px;">
-                    <p>Люди в чате</p>
-                    <ul id="Users" class="messagesList" style="padding-left: 0;">
-                    </ul>
-                </div>
-            </div>
-        }
-    </div>
-<div class="row">
-    <div class="col">
-        <hr />
+<div class="container">
+    <div class="row">
+        <div class="col-auto">
+            Добро пожаловать на главную страницу
+        </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-auto">
-        <ul id="messagesList" class="messagesList"></ul>
-    </div>
-</div>
+
