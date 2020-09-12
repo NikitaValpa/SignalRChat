@@ -58,7 +58,6 @@ namespace SignalRChat.Pages.DataBase.Users
             {
                 User.UserName = getUser.UserName;
                 User.Email = getUser.Email;
-                User.PasswordHash = getUser.PasswordHash;
                 var result = await _userManager.UpdateAsync(User);
                 if (result.Succeeded)
                 {

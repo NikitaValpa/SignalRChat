@@ -21,7 +21,7 @@ namespace SignalRChat
             }
             if (await userManager.FindByNameAsync(Name) == null)
             {
-                IdentityUser admin = new IdentityUser {UserName=Name, Email=adminEmail };
+                IdentityUser admin = new IdentityUser {UserName=Name, Email=adminEmail, EmailConfirmed=true };
                 IdentityResult result = await userManager.CreateAsync(admin, password);
                 if (result.Succeeded)
                 {

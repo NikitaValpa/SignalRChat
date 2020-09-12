@@ -48,7 +48,13 @@ namespace SignalRChat
             services.AddDbContext<SignalRChatContextIdentity>(options =>
                     options.UseMySql(Configuration.GetConnectionString("SignalRChatContext"), optionsMySql => optionsMySql.EnableRetryOnFailure()));
 
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<SignalRChatContextIdentity>();
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+             {   options.Password.RequiredLength = 5;
+                 options.Password.RequireNonAlphanumeric = false;
+                 options.Password.RequireLowercase = false;
+                 options.Password.RequireUppercase = false;
+                 options.Password.RequireDigit = false;
+             }).AddEntityFrameworkStores<SignalRChatContextIdentity>();
 
             services.Configure<IISServerOptions>(options =>
             {
