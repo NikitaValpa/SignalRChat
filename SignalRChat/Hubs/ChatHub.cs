@@ -30,16 +30,17 @@ namespace SignalRChat.Hubs
 
         public async Task SendMessage(string user, string message)// принимает параметры
         {
-            db.Messages.Add(new Messages { Name = user, Message = message, SendDate=DateTime.Now });//Добавляем в таблицу "Messages" нашей базы данных новую запись
+            var Message = new Messages { Name = user, Message = message, SendDate = DateTime.Now };
+            
+            // отправляет ответ
+            await Clients.All.SendAsync("ReceiveOne", Message);
+
+            db.Messages.Add(Message);//Добавляем в таблицу "Messages" нашей базы данных новую запись
             db.SaveChanges();//Сохраняем изменения
 
-            var Messages =  await db.Messages.ToListAsync();
+            
                 
-            // отправляет параметры
-            await Clients.All.SendAsync("ReceiveOne", Messages.Last());/*Первый параметр метода SendAsync() указывает на метод, который будет получать ответ от сервера, 
-                                                                           а вторые 2 параметра предаставляют набор значений, которые посылаются в ответе клиенту. То есть метод Send 
-                                                                           на клиенте получит значение параметров user и message. То есть наш хаб будет просто получать сообщение и 
-                                                                           транслировать его всем подключенным клиентам.*/
+
         }
         public override async Task OnConnectedAsync()
         {
