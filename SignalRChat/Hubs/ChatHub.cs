@@ -36,7 +36,7 @@ namespace SignalRChat.Hubs
             await Clients.All.SendAsync("ReceiveOne", Message);
 
             db.Messages.Add(Message);//Добавляем в таблицу "Messages" нашей базы данных новую запись
-            db.SaveChanges();//Сохраняем изменения
+            await db.SaveChangesAsync();//Сохраняем изменения
 
             
                 

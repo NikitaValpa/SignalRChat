@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://localhost/SignalRChat",
+      "applicationUrl": "http://localhost:82",
       "sslPort": 0
     },
     "iisExpress": {
