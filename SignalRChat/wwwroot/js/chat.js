@@ -53,7 +53,7 @@ function ChatScript() {
             document.getElementById("sendButton").addEventListener("click", function (event)//Обработчик для кнопки, который вызывается при её нажатии
             {
                 let user = document.getElementById("manage").innerText.slice(7);
-                let message = document.getElementById("messageInput").value;
+                let message = document.getElementById("messageInput").innerText;
                 let validator = document.getElementById("input-validation");
                 // Для отправки ведённых данных, хабу на сервер, вызывается метод "connection.invoke() с тремя параметрами"
                 // первый параметр представляет название метода хаба, обрабатывающее данный запрос, второй и третий параметры - данные отправляемые хабу.
@@ -72,7 +72,7 @@ function ChatScript() {
             document.getElementById("messageInput").addEventListener("keyup", function (event) {
                 if (event.code == "Enter") {
                     let user = document.getElementById("manage").innerText.slice(7);
-                    let message = document.getElementById("messageInput").value;
+                    let message = document.getElementById("messageInput").innerText;
                     let validator = document.getElementById("input-validation");
 
                     
