@@ -57,7 +57,7 @@ function ChatScript() {
                 let validator = document.getElementById("input-validation");
                 // Для отправки ведённых данных, хабу на сервер, вызывается метод "connection.invoke() с тремя параметрами"
                 // первый параметр представляет название метода хаба, обрабатывающее данный запрос, второй и третий параметры - данные отправляемые хабу.
-                if (message) {
+                if (document.getElementById("messageInput").textLength > 2) {
                     connection.invoke("SendMessage", user, message).catch(function (err) {
                         return console.error(err.toString());//если не получилось, пишем в консоль браузера ошибку
                     });
@@ -76,7 +76,7 @@ function ChatScript() {
                     let validator = document.getElementById("input-validation");
 
 
-                    if (message || message!="\n") {
+                    if (document.getElementById("messageInput").textLength > 2) {
                         connection.invoke("SendMessage", user, message).catch(function (err) {
                             return console.error(err.toString());//если не получилось, пишем в консоль браузера ошибку
                         });
