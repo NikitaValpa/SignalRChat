@@ -12,11 +12,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Serilog.Extensions.Logging;
 using SignalRChat.Hubs;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using SignalRChat.Data;
+using Serilog;
 
 namespace SignalRChat
 {
@@ -40,11 +40,11 @@ namespace SignalRChat
                 //o.KeepAliveInterval = TimeSpan.FromMinutes(1);
             });
 
-                // добавление контекста для взаимодействия с базой данных Entity Framework
+                // добавление контекста для взаимодействия с базой данных
             services.AddDbContext<SignalRChatContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("SignalRChatContext"), optionsMySql => optionsMySql.EnableRetryOnFailure()));
 
-            // добавление контекста для взаимодействия с базой данных Identity Framework
+            // добавление контекста для взаимодействия с базой данных 
             services.AddDbContext<SignalRChatContextIdentity>(options =>
                     options.UseMySql(Configuration.GetConnectionString("SignalRChatContext"), optionsMySql => optionsMySql.EnableRetryOnFailure()));
 
@@ -75,8 +75,6 @@ namespace SignalRChat
                 // Значение HSTS по умолчанию составляет 30 дней. Вы можете изменить это для производственных сценариев, см. Https://aka.ms/aspnetcore-hsts.
                 //app.UseHsts();
             }
-            var loggingOptions = Configuration.GetSection("Log4NetCore").Get<Log4NetProviderOptions>();
-            loggerFactory.AddLog4Net(loggingOptions);
 
             //app.UseHttpsRedirection();
             app.UseStaticFiles();

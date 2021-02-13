@@ -8,17 +8,18 @@ using Microsoft.Extensions.Logging;
 
 namespace SignalRChat.Pages
 {
-    public class PrivacyModel : PageModel
+    public class DiscriptionModel : PageModel
     {
-        private readonly ILogger<PrivacyModel> _logger;
+        private readonly ILogger<DiscriptionModel> _logger;
 
-        public PrivacyModel(ILogger<PrivacyModel> logger)
+        public DiscriptionModel(ILogger<DiscriptionModel> logger)
         {
             _logger = logger;
         }
 
         public void OnGet()
         {
+          
         }
     }
 }

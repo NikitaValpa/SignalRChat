@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using SignalRChat.Models;
+using Serilog;
 
 namespace SignalRChat
 {
@@ -48,7 +49,15 @@ namespace SignalRChat
                     webBuilder.UseConfiguration(config);
                     webBuilder.UseStartup<Startup>();
                     webBuilder.UseIISIntegration();
-                });
+                })
+                .UseSerilog((hostingContext, services, loggerConfiguration) => 
+                loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration)
+                .Enrich.FromLogContext()
+                .WriteTo.Debug()
+                .WriteTo.Console(
+                    outputTemplate: "{Timestamp:HH:mm:ss} [{Level}] {Message:lj} {Properties:j}{NewLine}{Exception}"
+                    )
+                );
         }
     }
 }
